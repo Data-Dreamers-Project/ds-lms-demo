@@ -57,6 +57,14 @@ export default function ProfilePage({ userId, data }: Props) {
     imageUrl,
   });
 
+  //以下のコードで変更を検知
+  const isChanged =
+    name !== savedValues.current.name ||
+    displayname !== savedValues.current.displayname ||
+    grade !== savedValues.current.grade ||
+    group !== savedValues.current.group ||
+    imageUrl !== savedValues.current.imageUrl;
+
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
   };
@@ -208,14 +216,16 @@ export default function ProfilePage({ userId, data }: Props) {
         </Select>
       </div>
 
-      <div className="border border-gray-700 border-2 w-full p-2 rounded-md flex justify-end mt-10 gap-1">
-        <Button onClick={handleSave} type="submit" variant="default">
-          送信
-        </Button>
-        <Button onClick={handleReset} type="button" variant="outline">
-          リセット
-        </Button>
-      </div>
+      {isChanged && (
+        <div className="border border-gray-700 border-2 w-full p-2 rounded-md flex justify-end mt-10 gap-1">
+          <Button onClick={handleSave} type="submit" variant="default">
+            保存
+          </Button>
+          <Button onClick={handleReset} type="button" variant="outline">
+            リセット
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
