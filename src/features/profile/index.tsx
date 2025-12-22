@@ -136,11 +136,11 @@ export default function ProfilePage({ userId, data }: Props) {
     }
 
     setSavedValues({
-      name: name,
-      displayname: displayname,
-      grade: grade,
-      group: group,
-      imageUrl: imageUrl,
+      name,
+      displayname,
+      grade,
+      group,
+      imageUrl,
     });
 
     toast.success("プロフィールを保存しました！", {
