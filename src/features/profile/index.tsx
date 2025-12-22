@@ -49,7 +49,7 @@ export default function ProfilePage({ userId, data }: Props) {
   const [imageUrl, setImageUrl] = useState(data.image ?? "/logo.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const savedValues = useRef({
+  const [savedValues, setSavedValues] = useState({
     name,
     displayname,
     grade,
@@ -59,11 +59,11 @@ export default function ProfilePage({ userId, data }: Props) {
 
   //以下のコードで変更を検知
   const isChanged =
-    name !== savedValues.current.name ||
-    displayname !== savedValues.current.displayname ||
-    grade !== savedValues.current.grade ||
-    group !== savedValues.current.group ||
-    imageUrl !== savedValues.current.imageUrl;
+    name !== savedValues.name ||
+    displayname !== savedValues.displayname ||
+    grade !== savedValues.grade ||
+    group !== savedValues.group ||
+    imageUrl !== savedValues.imageUrl;
 
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
@@ -135,18 +135,26 @@ export default function ProfilePage({ userId, data }: Props) {
       return;
     }
 
-    savedValues.current = { name, displayname, grade, group, imageUrl };
+    setSavedValues({
+      name: name,
+      displayname: displayname,
+      grade: grade,
+      group: group,
+      imageUrl: imageUrl,
+    });
+
     toast.success("プロフィールを保存しました！", {
       id: toastId,
     });
   };
 
   const handleReset = () => {
-    setName(savedValues.current.name);
-    setDisplayName(savedValues.current.displayname);
-    setGrade(savedValues.current.grade);
-    setGroup(savedValues.current.group);
-    setImageUrl(savedValues.current.imageUrl);
+    // ★重要：ここも .current をすべて消しました！
+    setName(savedValues.name);
+    setDisplayName(savedValues.displayname);
+    setGrade(savedValues.grade);
+    setGroup(savedValues.group);
+    setImageUrl(savedValues.imageUrl);
   };
 
   return (
