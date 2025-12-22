@@ -57,7 +57,6 @@ export default function ProfilePage({ userId, data }: Props) {
     imageUrl,
   });
 
-  //以下のコードで変更を検知
   const isChanged =
     name !== savedValues.name ||
     displayname !== savedValues.displayname ||
