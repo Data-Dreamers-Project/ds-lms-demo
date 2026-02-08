@@ -162,9 +162,12 @@ export default function ProfilePage({ userId, data }: Props) {
         <h1 className="text-2xl font-bold mb-4">プロフィール設定</h1>
       </div>
 
-      <Avatar className="h-32 w-32 rounded-lg mt-10">
-        <AvatarImage src={imageUrl} alt={name} className="cursor-pointer" onClick={handleAvatarClick} />
-      </Avatar>
+      <div className="mt-10">
+        <Label className="block font-semibold mb-2">アイコン</Label>
+        <Avatar className="h-32 w-32 rounded-lg">
+          <AvatarImage src={imageUrl} alt={name} className="cursor-pointer" onClick={handleAvatarClick} />
+        </Avatar>
+      </div>
 
       <Input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileChange} hidden />
 
@@ -224,12 +227,12 @@ export default function ProfilePage({ userId, data }: Props) {
       </div>
 
       {isChanged && (
-        <div className="border border-gray-700 border-2 w-full p-2 rounded-md flex justify-end mt-10 gap-1">
-          <Button onClick={handleSave} type="submit" variant="default">
-            保存
-          </Button>
+        <div className="w-fit p-2 rounded-md flex justify-end mt-10 gap-1 ml-auto">
           <Button onClick={handleReset} type="button" variant="outline">
             リセット
+          </Button>
+          <Button onClick={handleSave} type="submit" variant="default" className="bg-orange-500">
+            保存
           </Button>
         </div>
       )}
