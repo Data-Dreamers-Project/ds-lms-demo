@@ -35,7 +35,6 @@ export const updateUser = factory.createHandlers(
   async (c) => {
     const { user_id } = c.req.valid("param");
     const { image, name, displayName, grade, group, role } = c.req.valid("json");
-    console.log("Updating user:", { user_id, image, name, displayName, grade, group, role });
     const session = c.get("session");
     const isAdmin = session?.user.role === "ADMIN";
 

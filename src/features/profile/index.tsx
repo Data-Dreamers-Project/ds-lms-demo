@@ -8,7 +8,7 @@ import NavGuardDialog from "@/components/ui/nav-guard-dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { client } from "@/lib/hono";
 import type { InferResponseType } from "hono";
-import { useNavigationGuard } from "next-navigation-guard"; //useNavigationGuard を　next-navigation-guardから持ってきている。
+import { useNavigationGuard } from "next-navigation-guard";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -65,7 +65,7 @@ export default function ProfilePage({ userId, data }: Props) {
     grade !== savedValues.grade ||
     group !== savedValues.group ||
     imageUrl !== savedValues.imageUrl;
-  const navGuard = useNavigationGuard({ enabled: isChanged }); //enabledがtrueになったら作動変更があったら警告
+  const navGuard = useNavigationGuard({ enabled: isChanged });
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
   };
