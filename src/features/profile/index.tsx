@@ -4,9 +4,11 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import NavGuardDialog from "@/components/ui/nav-guard-dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { client } from "@/lib/hono";
 import type { InferResponseType } from "hono";
+import { useNavigationGuard } from "next-navigation-guard"; //useNavigationGuard を　next-navigation-guardから持ってきている。
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -63,7 +65,7 @@ export default function ProfilePage({ userId, data }: Props) {
     grade !== savedValues.grade ||
     group !== savedValues.group ||
     imageUrl !== savedValues.imageUrl;
-
+  const navGuard = useNavigationGuard({ enabled: isChanged }); //enabledがtrueになったら作動変更があったら警告
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
   };
@@ -121,6 +123,7 @@ export default function ProfilePage({ userId, data }: Props) {
       param: { user_id: userId },
       json: {
         displayName: displayname,
+        name: name,
         grade: grade === "" ? undefined : grade,
         group: group === "" ? undefined : group,
         image: imageUrl,
@@ -225,6 +228,8 @@ export default function ProfilePage({ userId, data }: Props) {
           </SelectContent>
         </Select>
       </div>
+
+      <NavGuardDialog open={isChanged && navGuard.active} onCancel={navGuard.reject} onAccept={navGuard.accept} />
 
       {isChanged && (
         <div className="w-fit p-2 rounded-md flex justify-end mt-10 gap-1 ml-auto">
