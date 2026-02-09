@@ -231,7 +231,7 @@ export default function ProfilePage({ userId, data }: Props) {
           <Button onClick={handleReset} type="button" variant="outline">
             リセット
           </Button>
-          <Button onClick={handleSave} type="submit" variant="default" className="bg-orange-500">
+          <Button onClick={handleSave} type="submit" variant="default">
             保存
           </Button>
         </div>
