@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { createAnswer } from "./createAnswer";
 import { createProblem } from "./createProblem";
 import { deleteProblem } from "./deleteProblem";
 import { getAnswer } from "./getAnswer";
@@ -17,4 +18,5 @@ export const problems = new Hono()
   .delete("/:problem_id", ...deleteProblem)
   .post("/:problem_id/submit", ...submitProblem)
   .get("/:problem_id/answers", ...getAnswers)
+  .post("/:problem_id/answers", ...createAnswer)
   .get("/answers/:answer_id", ...getAnswer);
