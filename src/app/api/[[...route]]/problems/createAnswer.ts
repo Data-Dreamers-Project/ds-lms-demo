@@ -14,18 +14,23 @@ const factory = createFactory<{ Variables: Variables }>();
 export const createAnswer = factory.createHandlers(
   withAdmin,
   zValidator(
+    "param",
+    z.object({
+      problem_id: z.string().cuid(),
+    }),
+  ),
+  zValidator(
     "json",
     z.object({
       title: z.string(),
       description: z.string(),
       code: z.string(),
-      problemId: z.string(),
-
-      isPublic: z.boolean().default(false),
+      isPublic: z.boolean().default(true),
     }),
   ),
 
   async (c) => {
+    const { problem_id } = c.req.valid("param");
     const json = c.req.valid("json");
     const session = c.get("session");
 
@@ -33,6 +38,7 @@ export const createAnswer = factory.createHandlers(
       const data = await prisma.answer.create({
         data: {
           ...json,
+          problemId: problem_id,
           createdById: session.user.id,
           updatedById: session.user.id,
         },
