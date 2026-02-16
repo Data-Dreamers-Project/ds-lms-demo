@@ -4,9 +4,11 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import NavGuardDialog from "@/components/ui/nav-guard-dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { client } from "@/lib/hono";
 import type { InferResponseType } from "hono";
+import { useNavigationGuard } from "next-navigation-guard";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -49,7 +51,7 @@ export default function ProfilePage({ userId, data }: Props) {
   const [imageUrl, setImageUrl] = useState(data.image ?? "/logo.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const savedValues = useRef({
+  const [savedValues, setSavedValues] = useState({
     name,
     displayname,
     grade,
@@ -57,6 +59,13 @@ export default function ProfilePage({ userId, data }: Props) {
     imageUrl,
   });
 
+  const isChanged =
+    name !== savedValues.name ||
+    displayname !== savedValues.displayname ||
+    grade !== savedValues.grade ||
+    group !== savedValues.group ||
+    imageUrl !== savedValues.imageUrl;
+  const navGuard = useNavigationGuard({ enabled: isChanged });
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
   };
@@ -114,6 +123,7 @@ export default function ProfilePage({ userId, data }: Props) {
       param: { user_id: userId },
       json: {
         displayName: displayname,
+        name: name,
         grade: grade === "" ? undefined : grade,
         group: group === "" ? undefined : group,
         image: imageUrl,
@@ -127,18 +137,26 @@ export default function ProfilePage({ userId, data }: Props) {
       return;
     }
 
-    savedValues.current = { name, displayname, grade, group, imageUrl };
+    setSavedValues({
+      name,
+      displayname,
+      grade,
+      group,
+      imageUrl,
+    });
+
     toast.success("プロフィールを保存しました！", {
       id: toastId,
     });
   };
 
   const handleReset = () => {
-    setName(savedValues.current.name);
-    setDisplayName(savedValues.current.displayname);
-    setGrade(savedValues.current.grade);
-    setGroup(savedValues.current.group);
-    setImageUrl(savedValues.current.imageUrl);
+    // ★重要：ここも .current をすべて消しました！
+    setName(savedValues.name);
+    setDisplayName(savedValues.displayname);
+    setGrade(savedValues.grade);
+    setGroup(savedValues.group);
+    setImageUrl(savedValues.imageUrl);
   };
 
   return (
@@ -147,9 +165,12 @@ export default function ProfilePage({ userId, data }: Props) {
         <h1 className="text-2xl font-bold mb-4">プロフィール設定</h1>
       </div>
 
-      <Avatar className="h-32 w-32 rounded-lg mt-10">
-        <AvatarImage src={imageUrl} alt={name} className="cursor-pointer" onClick={handleAvatarClick} />
-      </Avatar>
+      <div className="mt-10">
+        <Label className="block font-semibold mb-2">アイコン</Label>
+        <Avatar className="h-32 w-32 rounded-lg">
+          <AvatarImage src={imageUrl} alt={name} className="cursor-pointer" onClick={handleAvatarClick} />
+        </Avatar>
+      </div>
 
       <Input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileChange} hidden />
 
@@ -208,14 +229,18 @@ export default function ProfilePage({ userId, data }: Props) {
         </Select>
       </div>
 
-      <div className="border border-gray-700 border-2 w-full p-2 rounded-md flex justify-end mt-10 gap-1">
-        <Button onClick={handleSave} type="submit" variant="default">
-          送信
-        </Button>
-        <Button onClick={handleReset} type="button" variant="outline">
-          リセット
-        </Button>
-      </div>
+      <NavGuardDialog open={isChanged && navGuard.active} onCancel={navGuard.reject} onAccept={navGuard.accept} />
+
+      {isChanged && (
+        <div className="w-fit p-2 rounded-md flex justify-end mt-10 gap-1 ml-auto">
+          <Button onClick={handleReset} type="button" variant="outline">
+            リセット
+          </Button>
+          <Button onClick={handleSave} type="submit" variant="default">
+            保存
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
