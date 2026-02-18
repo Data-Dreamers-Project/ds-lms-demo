@@ -8,6 +8,7 @@ import { getAnswers } from "./getAnswers";
 import { getProblem } from "./getProblem";
 import { getProblemList } from "./getProblemList";
 import { submitProblem } from "./submitProblem";
+import { updateAnswer } from "./updateAnswer";
 import { updateProblem } from "./updateProblem";
 
 // BaseAPIPath is /api/problems
@@ -21,4 +22,5 @@ export const problems = new Hono()
   .get("/:problem_id/answers", ...getAnswers)
   .post("/:problem_id/answers", ...createAnswer)
   .get("/answers/:answer_id", ...getAnswer)
-  .delete("/answers/:answer_id", ...deleteAnswer);
+  .delete("/answers/:answer_id", ...deleteAnswer)
+  .patch("/answers/:answer_id", ...updateAnswer);
