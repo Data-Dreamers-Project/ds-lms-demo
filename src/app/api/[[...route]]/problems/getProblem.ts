@@ -37,6 +37,9 @@ export const getProblem = factory.createHandlers(
     try {
       const data = await prisma.problem.findFirst({
         include: {
+          course: {
+            select: { id: true, title: true },
+          },
           createdBy: isAdmin,
           updatedBy: isAdmin,
           tags: true,
