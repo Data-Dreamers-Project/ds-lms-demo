@@ -7,7 +7,7 @@ export default async function ProblemEditPage({ params }: { params: Promise<{ pr
   const res = await client.api.problems[":problem_id"].$get({ param: { problem_id: problemId } });
 
   if (res.status === 404) return notFound();
-  if (!res.ok) return new Error("Failed to fetch problem");
+  if (!res.ok) throw new Error("Failed to fetch problem");
   const problem = await res.json();
 
   // courseIdを取得する必要がある場合は、problemから取得するか、別途APIを呼び出す

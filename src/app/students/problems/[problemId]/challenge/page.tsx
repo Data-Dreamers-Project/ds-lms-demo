@@ -22,7 +22,7 @@ export default async function ({ params }: { params: Promise<{ problemId: string
   );
 
   if (res.status === 404) return notFound();
-  if (!res.ok) return new Error("Failed to fetch problem");
+  if (!res.ok) throw new Error("Failed to fetch problem");
   const problem = await res.json();
 
   return <ProgrammingInterface problem={problem} />;
