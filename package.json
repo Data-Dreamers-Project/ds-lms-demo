@@ -11,7 +11,11 @@
 		"lint": "biome lint",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
-		"test": "jest"
+		"test": "jest",
+		"db:up": "docker compose up -d",
+		"db:down": "docker compose down",
+		"db:migrate": "prisma migrate dev",
+		"db:seed": "docker compose exec -T db psql -U postgres -d ds-lms-demo -f /seeder/seed.sql"
 	},
 	"dependencies": {
 		"@hono/zod-validator": "^0.4.3",
