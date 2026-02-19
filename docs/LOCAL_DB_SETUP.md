@@ -10,6 +10,10 @@
 
 ## 1. 環境変数の設定
 
+環境変数（`.env`）は Box でも共有されています。Box から取得した場合は、ルートディレクトリに `.env` として配置してください。
+
+`.env.example` から作成する場合は、以下を実行します。
+
 1. ルートディレクトリで `.env.example` をコピーして `.env` を作成します。
 
    ```bash
@@ -57,7 +61,11 @@ bun run db:migrate
 
 内部的には `prisma migrate dev` が実行され、`prisma/migrations` の内容が DB に反映されます。
 
-## 4. 初期データ（Seeder）の実行
+## 4. seed.sql を Box から取得
+
+初期データ用の `seed.sql` は Box で共有されています。Box から `seed.sql` をダウンロードし、`prisma/seeder/seed.sql` に配置してください。
+
+## 5. 初期データ（Seeder）の実行
 
 バックアップ用の SQL（`prisma/seeder/seed.sql`）をそのまま流し込むため、Seeder を実行します。
 
@@ -79,7 +87,7 @@ bun run db:seed
 - ホスト側: `prisma/seeder/seed.sql`
 - コンテナ内: `/seeder/seed.sql`
 
-## 5. アプリケーションの起動
+## 6. アプリケーションの起動
 
 DB が立ち上がり、マイグレーションと Seeder が完了したら、アプリケーションを起動します。
 
