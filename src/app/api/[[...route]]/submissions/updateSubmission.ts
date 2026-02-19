@@ -135,7 +135,6 @@ export const updateSubmission = factory.createHandlers(
       return c.json(
         {
           error: "提出内容の更新中にエラーが発生しました",
-          details: error instanceof Error ? error.message : String(error),
         },
         500,
       );

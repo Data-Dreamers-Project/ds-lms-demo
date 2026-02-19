@@ -46,7 +46,6 @@ export const submitProblem = factory.createHandlers(
       return c.json(
         {
           error: "解答提出中にエラーが発生しました",
-          details: error instanceof Error ? error.message : String(error),
         },
         500,
       );

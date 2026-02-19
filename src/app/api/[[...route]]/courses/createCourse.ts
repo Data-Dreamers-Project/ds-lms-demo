@@ -34,7 +34,7 @@ export const createCourse = factory.createHandlers(
       return c.json(data);
     } catch (error) {
       console.error("コースの作成中にエラーが発生しました:", error);
-      return c.json({ error: "コースの作成中にエラーが発生しました", details: error as string }, 500);
+      return c.json({ error: "コースの作成中にエラーが発生しました" }, 500);
     }
   },
 );
