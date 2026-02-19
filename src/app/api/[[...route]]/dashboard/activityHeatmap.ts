@@ -55,7 +55,7 @@ export const activityHeatmap = factory.createHandlers(
       return c.json(data);
     } catch (error) {
       console.error("問題の取得中にエラーが発生しました:", error);
-      return c.json({ error: "問題の取得中にエラーが発生しました", details: error as string }, 500);
+      return c.json({ error: "問題の取得中にエラーが発生しました" }, 500);
     }
   },
 );

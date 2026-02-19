@@ -49,7 +49,6 @@ export const createAnswer = factory.createHandlers(
       return c.json(
         {
           error: "解答の作成中にエラーが発生しました",
-          details: error instanceof Error ? error.message : String(error),
         },
         500,
       );

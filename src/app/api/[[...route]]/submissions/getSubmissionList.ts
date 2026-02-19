@@ -61,7 +61,7 @@ export const getSubmissionList = factory.createHandlers(
       return c.json(data);
     } catch (error) {
       console.error("挑戦履歴の取得中にエラーが発生しました:", error);
-      return c.json({ error: "挑戦履歴の取得中にエラーが発生しました", details: error as string }, 500);
+      return c.json({ error: "挑戦履歴の取得中にエラーが発生しました" }, 500);
     }
   },
 );
