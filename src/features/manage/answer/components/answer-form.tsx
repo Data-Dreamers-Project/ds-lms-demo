@@ -54,30 +54,33 @@ export function AnswerForm({ problemId, answer }: AnswerFormProps) {
     const toastId = toast.loading(isEdit ? "更新中..." : "作成中...");
 
     if (isEdit && answer) {
-      const answerId = answer.id;
-      const res = await client.api.problems.answers[":answer_id"].$patch({
-        param: { answer_id: answerId },
-        json: values,
-      });
-      if (res.ok) {
-        toast.success("模範解答を更新しました", { id: toastId });
-        router.push(`/manage/problems/${problemId}/answers`);
-        router.refresh();
-      } else {
-        toast.error("更新に失敗しました", { id: toastId });
-      }
+      // NOTE: updateAnswer API がマージされるまで編集機能は無効化
+      // const answerId = answer.id;
+      // const res = await client.api.problems.answers[":answer_id"].$patch({
+      //   param: { answer_id: answerId },
+      //   json: values,
+      // });
+      // if (res.ok) {
+      //   toast.success("模範解答を更新しました", { id: toastId });
+      //   router.push(`/manage/problems/${problemId}/answers`);
+      //   router.refresh();
+      // } else {
+      //   toast.error("更新に失敗しました", { id: toastId });
+      // }
+      toast.error("現在、模範解答の編集 API が未マージのため更新できません。", { id: toastId });
+      return;
+    }
+
+    const res = await client.api.problems[":problem_id"].answers.$post({
+      param: { problem_id: problemId },
+      json: values,
+    });
+    if (res.ok) {
+      toast.success("模範解答を作成しました", { id: toastId });
+      router.push(`/manage/problems/${problemId}/answers`);
+      router.refresh();
     } else {
-      const res = await client.api.problems[":problem_id"].answers.$post({
-        param: { problem_id: problemId },
-        json: values,
-      });
-      if (res.ok) {
-        toast.success("模範解答を作成しました", { id: toastId });
-        router.push(`/manage/problems/${problemId}/answers`);
-        router.refresh();
-      } else {
-        toast.error("作成に失敗しました", { id: toastId });
-      }
+      toast.error("作成に失敗しました", { id: toastId });
     }
   }
 
