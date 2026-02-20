@@ -22,5 +22,5 @@ export const problems = new Hono()
   .get("/:problem_id/answers", ...getAnswers)
   .post("/:problem_id/answers", ...createAnswer)
   .get("/answers/:answer_id", ...getAnswer)
-  .delete("/answers/:answer_id", ...deleteAnswer)
-  .patch("/answers/:answer_id", ...updateAnswer);
+  .patch("/answers/:answer_id", ...updateAnswer)
+  .delete("/answers/:answer_id", ...deleteAnswer);
