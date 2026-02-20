@@ -44,38 +44,34 @@ export function CourseForm({ course }: CourseFormProps) {
   async function onSubmit(values: z.infer<typeof courseFormSchema>) {
     const toastId = toast.loading(isEdit ? "更新中..." : "作成中...");
 
-    try {
-      if (isEdit && course) {
-        const res = await client.api.courses[":course_id"].$patch({
-          param: { course_id: course.id },
-          json: values,
-        });
+    if (isEdit && course) {
+      const res = await client.api.courses[":course_id"].$patch({
+        param: { course_id: course.id },
+        json: values,
+      });
 
-        if (!res.ok) {
-          const error = await res.json();
-          throw new Error(error.error || "更新に失敗しました");
-        }
-
-        toast.success("コースを更新しました", { id: toastId });
-        router.push(`/manage/courses/${course.id}`);
-        router.refresh();
-      } else {
-        const res = await client.api.courses.$post({
-          json: values,
-        });
-
-        if (!res.ok) {
-          const error = await res.json();
-          throw new Error(error.error || "作成に失敗しました");
-        }
-
-        const created = await res.json();
-        toast.success("コースを作成しました", { id: toastId });
-        router.push(`/manage/courses/${created.id}`);
-        router.refresh();
+      if (!res.ok) {
+        toast.error("更新に失敗しました", { id: toastId });
+        return;
       }
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "エラーが発生しました", { id: toastId });
+
+      toast.success("コースを更新しました", { id: toastId });
+      router.push(`/manage/courses/${course.id}`);
+      router.refresh();
+    } else {
+      const res = await client.api.courses.$post({
+        json: values,
+      });
+
+      if (!res.ok) {
+        toast.error("作成に失敗しました", { id: toastId });
+        return;
+      }
+
+      const created = await res.json();
+      toast.success("コースを作成しました", { id: toastId });
+      router.push(`/manage/courses/${created.id}`);
+      router.refresh();
     }
   }
 
