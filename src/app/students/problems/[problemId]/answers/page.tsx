@@ -55,7 +55,7 @@ export default async function ProblemAnswersPage({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <h1 className="text-3xl font-bold">模範解答一覧</h1>
+        <h1 className="text-2xl font-bold">模範解答一覧</h1>
         <p className="text-muted-foreground">問題: {problem.title}</p>
       </div>
 

@@ -77,7 +77,7 @@ export default function Maintenance({ startedTime, estimatedEndTime }: Maintenan
               }}
               className="text-center"
             >
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground">メンテナンス中</h1>
+              <h1 className="text-2xl md:text-4xl font-bold text-foreground">メンテナンス中</h1>
             </motion.div>
 
             {/* Description */}

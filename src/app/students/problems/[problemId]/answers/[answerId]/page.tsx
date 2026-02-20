@@ -59,7 +59,7 @@ export default async function AnswerDetailPage({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <h1 className="text-3xl font-bold">{answer.title}</h1>
+        <h1 className="text-2xl font-bold">{answer.title}</h1>
       </div>
 
       {answer.description && (

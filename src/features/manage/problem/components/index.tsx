@@ -206,7 +206,7 @@ export default function ProblemCreator({ courseId, problem }: ProblemCreatorProp
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="flex items-start justify-between gap-2">
-            <h1 className="text-3xl font-bold mb-6">問題作成</h1>
+            <h1 className="text-2xl font-bold mb-6">問題作成</h1>
 
             <FormField
               control={form.control}
@@ -310,7 +310,7 @@ export default function ProblemCreator({ courseId, problem }: ProblemCreatorProp
                 <div>
                   <h3 className="text-lg font-medium mb-2">プレビュー</h3>
                   <Card>
-                    <CardContent className="pt-6">
+                    <CardContent>
                       <div className="prose max-w-none dark:prose-invert">
                         <h2 className="text-2xl">問題文</h2>
                         <MarkdownViewer content={problemStatementValue} className="p-4" />
@@ -357,7 +357,7 @@ export default function ProblemCreator({ courseId, problem }: ProblemCreatorProp
               <div className="space-y-6">
                 {fields.map((field, index) => (
                   <Card key={field.id}>
-                    <CardContent className="pt-6">
+                    <CardContent>
                       <div className="flex justify-between items-center mb-4">
                         <h3 className="text-lg font-medium">テストケース {index + 1}</h3>
                         {fields.length > 2 && (
