@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,7 +21,15 @@ export default function CoursesCarouselCard({
       </div>
 
       <CardHeader className="pl-3 pb-2 pt-2">
-        <CardTitle className="text-lg font-semibold leading-tight truncate">{title}</CardTitle>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <CardTitle className="text-lg font-semibold leading-tight truncate">{title}</CardTitle>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{title}</p>
+          </TooltipContent>
+        </Tooltip>
+
         <CardDescription className="text-sm text-gray-500 leading-normal">{description}</CardDescription>
       </CardHeader>
 
