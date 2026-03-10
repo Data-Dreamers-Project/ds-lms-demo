@@ -1,9 +1,11 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 export default function CoursesCarouselCard({
   id,
@@ -14,6 +16,26 @@ export default function CoursesCarouselCard({
 }: { id: string; title: string; description: string; achievementLevel: number; maxAchievementLevel: number }) {
   const progressValue = (achievementLevel / maxAchievementLevel) * 100;
 
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const [isTruncated, setIsTruncated] = useState(false);
+
+  useEffect(() => {
+    if (titleRef.current) {
+      setIsTruncated(titleRef.current.scrollWidth > titleRef.current.clientWidth);
+    }
+  }, []);
+
+  const TitleElement = (
+    <CardTitle
+      ref={titleRef}
+      className={`text-lg font-semibold leading-tight truncate ${
+        isTruncated ? "cursor-pointer hover:opacity-80 transition-opacity" : ""
+      }`}
+    >
+      {title}
+    </CardTitle>
+  );
+
   return (
     <Card className="w-full max-w-[255px] shadow-md rounded-t-2xl mb-11">
       <div className="relative w-full h-[184px]">
@@ -21,14 +43,19 @@ export default function CoursesCarouselCard({
       </div>
 
       <CardHeader className="pl-3 pb-2 pt-2">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <CardTitle className="text-lg font-semibold leading-tight truncate">{title}</CardTitle>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{title}</p>
-          </TooltipContent>
-        </Tooltip>
+        {/* はみ出している(isTruncated が true の)時だけ Tooltip で囲む！ */}
+        {isTruncated ? (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>{TitleElement}</TooltipTrigger>
+              <TooltipContent>
+                <p>{title}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        ) : (
+          TitleElement
+        )}
 
         <CardDescription className="text-sm text-gray-500 leading-normal">{description}</CardDescription>
       </CardHeader>
