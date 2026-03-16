@@ -38,7 +38,7 @@ export const deleteCourse = factory.createHandlers(
       return c.body(null, 204);
     } catch (error) {
       console.error(error);
-      return c.json({ error: "コースの削除中にエラーが発生しました", details: error as string }, 500);
+      return c.json({ error: "コースの削除中にエラーが発生しました" }, 500);
     }
   },
 );

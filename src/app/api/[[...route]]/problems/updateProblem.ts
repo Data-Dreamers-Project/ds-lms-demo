@@ -59,7 +59,6 @@ export const updateProblem = factory.createHandlers(
       return c.json(
         {
           error: "問題の作成中にエラーが発生しました",
-          details: error instanceof Error ? error.message : String(error),
         },
         500,
       );

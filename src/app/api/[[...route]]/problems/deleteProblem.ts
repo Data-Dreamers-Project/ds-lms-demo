@@ -38,8 +38,7 @@ export const deleteProblem = factory.createHandlers(
 
       return c.body(null, 204);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      return c.json({ error: "問題の削除中にエラーが発生しました", details: errorMessage }, 500);
+      return c.json({ error: "問題の削除中にエラーが発生しました" }, 500);
     }
   },
 );

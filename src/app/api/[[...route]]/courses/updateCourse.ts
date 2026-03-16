@@ -62,7 +62,6 @@ export const updateCourse = factory.createHandlers(
       return c.json(
         {
           error: "コースの更新中にエラーが発生しました",
-          details: error as string,
         },
         500,
       );

@@ -32,5 +32,17 @@ export const formSchema = z.object({
     }),
 });
 
+export const answerSchema = z.object({
+  title: z.string().min(1, {
+    message: "タイトルは必須です",
+  }),
+  code: z.string().min(1, {
+    message: "コードの正答例は必須です",
+  }),
+  description: z.string(),
+  isPublic: z.boolean(),
+});
+
 export type FormValues = z.infer<typeof formSchema>;
 export type TestCase = z.infer<typeof testCaseSchema>;
+export type AnswerValues = z.infer<typeof answerSchema>;

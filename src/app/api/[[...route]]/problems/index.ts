@@ -1,14 +1,17 @@
 import { Hono } from "hono";
+import { createAnswer } from "./createAnswer";
 import { createProblem } from "./createProblem";
+import { deleteAnswer } from "./deleteAnswer";
 import { deleteProblem } from "./deleteProblem";
 import { getAnswer } from "./getAnswer";
 import { getAnswers } from "./getAnswers";
 import { getProblem } from "./getProblem";
 import { getProblemList } from "./getProblemList";
 import { submitProblem } from "./submitProblem";
+import { updateAnswer } from "./updateAnswer";
 import { updateProblem } from "./updateProblem";
 
-// BaseAPIPath is /api/courses/problems
+// BaseAPIPath is /api/problems
 export const problems = new Hono()
   .get("/", ...getProblemList)
   .post("/", ...createProblem)
@@ -17,4 +20,7 @@ export const problems = new Hono()
   .delete("/:problem_id", ...deleteProblem)
   .post("/:problem_id/submit", ...submitProblem)
   .get("/:problem_id/answers", ...getAnswers)
-  .get("/answers/:answer_id", ...getAnswer);
+  .post("/:problem_id/answers", ...createAnswer)
+  .get("/answers/:answer_id", ...getAnswer)
+  .patch("/answers/:answer_id", ...updateAnswer)
+  .delete("/answers/:answer_id", ...deleteAnswer);

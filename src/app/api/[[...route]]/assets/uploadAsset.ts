@@ -19,7 +19,7 @@ export const uploadAsset = factory.createHandlers(
       file: z.instanceof(File),
       fileName: z.string(),
       bucket: z.enum(["csv-tsv", "image", "pdf"]),
-    })
+    }),
   ),
   async (c) => {
     try {

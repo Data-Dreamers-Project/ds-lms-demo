@@ -22,7 +22,11 @@ export default async function ({ params }: { params: Promise<{ submissionId: str
   );
 
   if (400 <= res.status && res.status < 500) return notFound();
-  if (!res.ok) return console.error(res.status, await res.json());
+  if (!res.ok) {
+    const errorData = await res.json();
+    console.error(res.status, errorData);
+    throw new Error("Failed to fetch submission");
+  }
   const submission = await res.json();
 
   return (
