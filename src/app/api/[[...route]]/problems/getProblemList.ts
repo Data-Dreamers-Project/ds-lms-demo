@@ -17,7 +17,13 @@ export const getProblemList = factory.createHandlers(
   ),
   async (c) => {
     try {
-      const data = await prisma.problem.findMany();
+      const data = await prisma.problem.findMany({
+        include: {
+          course: {
+            select: { id: true, title: true },
+          },
+        },
+      });
       return c.json(data);
     } catch (error) {
       console.error("問題の取得中にエラーが発生しました:", error);

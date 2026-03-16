@@ -19,7 +19,7 @@ export default function CTA() {
             viewport={{ once: true }}
             className="space-y-2"
           >
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white">
+            <h2 className="text-2xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white">
               今すぐ始めよう
             </h2>
             <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl">Somniで、必要な力を手に入れよう。</p>

@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { MarkdownViewer } from "@/components/ui/markdown";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { client } from "@/lib/hono";
 import dayjs from "dayjs";
@@ -26,7 +27,7 @@ export default async function ProblemDetail({ params }: { params: Promise<{ prob
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">{problem.title}</h1>
+        <h1 className="text-2xl font-bold">{problem.title}</h1>
         <Link href={`/students/problems/${problemId}/answers`}>
           <Button variant="outline">解説を見る</Button>
         </Link>
@@ -53,29 +54,33 @@ export default async function ProblemDetail({ params }: { params: Promise<{ prob
             <CardHeader>
               <CardTitle className="text-xl">挑戦履歴</CardTitle>
               <Separator className="my-2" />
-              {problem.submissions.length > 0 ? (
-                problem.submissions.map((submission) => (
-                  <div key={submission.id} className="p-4 flex flex-col gap-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="default">{submission.status}</Badge>
-                      <p className="text-sm text-gray-500">{dayjs(submission.createdAt).format("YYYY/MM/DD HH:mm")}</p>
-                    </div>
-                    <p>
-                      Score: {submission.status === "EVALUATED" ? `${submission.score}点` : "まだ評価されていません"}
-                    </p>
+              <ScrollArea className="max-h-[500px] overflow-y-auto">
+                {problem.submissions.length > 0 ? (
+                  problem.submissions.map((submission) => (
+                    <div key={submission.id} className="p-4 flex flex-col gap-2 ">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Badge variant="default">{submission.status}</Badge>
+                        <p className="text-sm text-gray-500">
+                          {dayjs(submission.createdAt).format("YYYY/MM/DD HH:mm")}
+                        </p>
+                      </div>
+                      <p>
+                        Score: {submission.status === "EVALUATED" ? `${submission.score}点` : "まだ評価されていません"}
+                      </p>
 
-                    <Link href={`/students/submissions/${submission.id}`}>
-                      <Button variant="outline" className="mt-2 w-full">
-                        詳細を見る
-                      </Button>
-                    </Link>
+                      <Link href={`/students/submissions/${submission.id}`}>
+                        <Button variant="outline" className="mt-2 w-full">
+                          詳細を見る
+                        </Button>
+                      </Link>
+                    </div>
+                  ))
+                ) : (
+                  <div className="p-4 text-center text-gray-500">
+                    <p>まだ挑戦履歴はありません</p>
                   </div>
-                ))
-              ) : (
-                <div className="p-4 text-center text-gray-500">
-                  <p>まだ挑戦履歴はありません</p>
-                </div>
-              )}
+                )}
+              </ScrollArea>
             </CardHeader>
           </Card>
           <Card>

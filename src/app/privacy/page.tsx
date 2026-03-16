@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 export default function PrivacyPolicyPage() {
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-extrabold mb-4">プライバシーポリシー（個人情報保護方針）</h1>
+      <h1 className="text-2xl font-extrabold mb-4">プライバシーポリシー（個人情報保護方針）</h1>
       {/* Scrollable container using TailwindCSS instead of ScrollArea component */}
       <div className="h-[calc(100vh-4rem)] overflow-y-auto">
         <Card className="space-y-4 p-6">
