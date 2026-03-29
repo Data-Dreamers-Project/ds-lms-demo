@@ -58,14 +58,14 @@ export function TestResultItem({ index, result, testCase }: TestResultItemProps)
           <span className={`text-xs font-medium ${statusInfo.text}`}>{statusInfo.label}</span>
         </div>
       </div>
-      <div className="spase-y-3">
+      <div className="space-y-3">
         {testCase.isHidden || (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div className="space-y-1">
               <div className="text-xs font-medium">入力:</div>
-              <pre className="text-xs bg-muted p-2 rounded overflow-auto max-h-20">{testCase.input}</pre>
+              <Textarea readOnly value={testCase.input} className="resize-y min-h-[40px] bg-muted text-xs" />
             </div>
-            <div className="space-y-1.5">
+            <div className="space-y-1">
               <div className="text-xs font-medium">期待する出力:</div>
               <Textarea readOnly value={testCase.output} className="resize-y min-h-[40px] bg-muted text-xs" />
             </div>
