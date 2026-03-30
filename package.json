@@ -43,6 +43,7 @@
 		"@supabase/supabase-js": "^2.49.1",
 		"@t3-oss/env-nextjs": "^0.11.1",
 		"@tailwindcss/postcss": "^4.1.10",
+		"@tailwindcss/typography": "^0.5.19",
 		"@tanstack/react-table": "^8.20.6",
 		"@vercel/edge-config": "^1.4.0",
 		"class-variance-authority": "^0.7.1",
