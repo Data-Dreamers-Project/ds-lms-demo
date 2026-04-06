@@ -1,7 +1,10 @@
+"use client";
+import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import type { ConvertDateToString } from "@/types/utils";
 import type { TestResult } from "@prisma/client";
-import { Info } from "lucide-react";
+import { Copy, Info } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
 import type { TestResult as TestResultType } from "../types/index";
 import { getStatusInfo } from "../utils";
 
@@ -17,6 +20,16 @@ interface TestResultItemProps {
 
 export function TestResultItem({ index, result, testCase }: TestResultItemProps) {
   const statusInfo = getStatusInfo(result.status);
+  const [isCopied, setIsCopied] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleCopy = useCallback((text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      setIsCopied(true);
+      timerRef.current = setTimeout(() => setIsCopied(false), 2000);
+    });
+  }, []);
 
   return (
     <div className="rounded border p-3">
@@ -41,26 +54,48 @@ export function TestResultItem({ index, result, testCase }: TestResultItemProps)
           <span className={`text-xs font-medium ${statusInfo.text}`}>{statusInfo.label}</span>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div className="space-y-3">
         {testCase.isHidden || (
-          <>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div className="space-y-1">
               <div className="text-xs font-medium">入力:</div>
-              <pre className="text-xs bg-muted p-2 rounded overflow-auto max-h-20">{testCase.input}</pre>
+              <Textarea readOnly value={testCase.input} className="resize-y min-h-10 bg-muted text-xs" />
             </div>
             <div className="space-y-1">
               <div className="text-xs font-medium">期待する出力:</div>
-              <pre className="text-xs bg-muted p-2 rounded overflow-auto max-h-20">{testCase.output}</pre>
+              <Textarea readOnly value={testCase.output} className="resize-y min-h-10 bg-muted text-xs" />
             </div>
-          </>
+          </div>
         )}
-        <div className="space-y-1">
-          <div className="text-xs font-medium">実際の出力:</div>
-          <pre className="text-xs bg-muted p-2 rounded overflow-auto max-h-20 min-h-8">{result.actualOutput}</pre>
-        </div>
-        <div className="space-y-1">
-          <div className="text-xs font-medium">エラー:</div>
-          <pre className="text-xs bg-muted p-2 rounded overflow-auto max-h-20">{result.errorLog || "なし"}</pre>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div className="space-y-1">
+            <div className="text-xs font-medium">実際の出力:</div>
+            <Textarea readOnly value={result.actualOutput || ""} className="resize-y min-h-20 bg-muted text-xs" />
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-medium">エラー:</div>
+            <div className="relative group">
+              <Textarea
+                readOnly
+                value={result.errorLog || "なし"}
+                className="resize-y min-h-20 bg-muted text-xs pr-10"
+              />
+              <div className="absolute top-2 right-4">
+                <button
+                  type="button"
+                  onClick={() => handleCopy(result.errorLog || "")}
+                  className="flex items-center gap-1.5 px-2 py-1 text-[10px] bg-muted"
+                  aria-label="エラーをコピー"
+                >
+                  {isCopied ? (
+                    <span className="text-green-600 font-medium">コピー完了</span>
+                  ) : (
+                    <Copy className="h-3.5 w-3.5" />
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
