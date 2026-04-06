@@ -4,8 +4,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import type { ConvertDateToString } from "@/types/utils";
 import type { TestResult } from "@prisma/client";
 import { Copy, Info } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useCopyToClipboard } from "usehooks-ts";
+import { useCallback, useRef, useState } from "react";
 import type { TestResult as TestResultType } from "../types/index";
 import { getStatusInfo } from "../utils";
 
@@ -21,19 +20,16 @@ interface TestResultItemProps {
 
 export function TestResultItem({ index, result, testCase }: TestResultItemProps) {
   const statusInfo = getStatusInfo(result.status);
-  const [, copy] = useCopyToClipboard();
   const [isCopied, setIsCopied] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    if (isCopied) {
-      const timer = setTimeout(() => setIsCopied(false), 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [isCopied]);
-
-  const handleCopy = (text: string) => {
-    copy(text).then(() => setIsCopied(true));
-  };
+  const handleCopy = useCallback((text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      setIsCopied(true);
+      timerRef.current = setTimeout(() => setIsCopied(false), 2000);
+    });
+  }, []);
 
   return (
     <div className="rounded border p-3">
@@ -63,18 +59,18 @@ export function TestResultItem({ index, result, testCase }: TestResultItemProps)
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div className="space-y-1">
               <div className="text-xs font-medium">入力:</div>
-              <Textarea readOnly value={testCase.input} className="resize-y min-h-[40px] bg-muted text-xs" />
+              <Textarea readOnly value={testCase.input} className="resize-y min-h-10 bg-muted text-xs" />
             </div>
             <div className="space-y-1">
               <div className="text-xs font-medium">期待する出力:</div>
-              <Textarea readOnly value={testCase.output} className="resize-y min-h-[40px] bg-muted text-xs" />
+              <Textarea readOnly value={testCase.output} className="resize-y min-h-10 bg-muted text-xs" />
             </div>
           </div>
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           <div className="space-y-1">
             <div className="text-xs font-medium">実際の出力:</div>
-            <Textarea readOnly value={result.actualOutput || ""} className="resize-y min-h-[80px] bg-muted text-xs" />
+            <Textarea readOnly value={result.actualOutput || ""} className="resize-y min-h-20 bg-muted text-xs" />
           </div>
           <div className="space-y-1">
             <div className="text-xs font-medium">エラー:</div>
@@ -82,7 +78,7 @@ export function TestResultItem({ index, result, testCase }: TestResultItemProps)
               <Textarea
                 readOnly
                 value={result.errorLog || "なし"}
-                className="resize-y min-h-[80px] bg-muted text-xs pr-10"
+                className="resize-y min-h-20 bg-muted text-xs pr-10"
               />
               <div className="absolute top-2 right-4">
                 <button
