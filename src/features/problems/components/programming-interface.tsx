@@ -50,7 +50,7 @@ export default function ProgrammingInterface({ problem, mode = "challenge" }: Pr
     if (!enabled) setEnabled(true);
   };
 
-  const onSubmitCode = async () => {
+  const onSubmitCode = async (description: string) => {
     const toastId = toast.loading("提出しています...");
     const startedAt = getStartedAt();
 
@@ -61,6 +61,7 @@ export default function ProgrammingInterface({ problem, mode = "challenge" }: Pr
       json: {
         code: codeRef.current || "",
         startedAt: startedAt,
+        description: description || null,
       },
     });
 

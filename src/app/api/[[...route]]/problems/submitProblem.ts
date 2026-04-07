@@ -24,6 +24,7 @@ export const submitProblem = factory.createHandlers(
     z.object({
       code: z.string(),
       startedAt: z.string().nullable(),
+      description: z.string().nullable().optional(),
     }),
   ),
   async (c) => {
