@@ -67,10 +67,6 @@ export default async function ProblemDetail({ params }: { params: Promise<{ prob
                       <p>
                         Score: {submission.status === "EVALUATED" ? `${submission.score}点` : "まだ評価されていません"}
                       </p>
-                      {submission.description && (
-                        <p className="text-sm text-gray-600 whitespace-pre-wrap">{submission.description}</p>
-                      )}
-
                       <Link href={`/students/submissions/${submission.id}`}>
                         <Button variant="outline" className="mt-2 w-full">
                           詳細を見る
