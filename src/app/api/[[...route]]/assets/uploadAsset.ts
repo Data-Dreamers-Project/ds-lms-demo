@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin as supabase } from "@/lib/supabase";
 import { zValidator } from "@hono/zod-validator";
 import { createFactory } from "hono/factory";
 import type { Session } from "next-auth";
