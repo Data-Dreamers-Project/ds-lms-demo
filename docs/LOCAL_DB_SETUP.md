@@ -20,13 +20,13 @@
    cp .env.example .env
    ```
 
-2. `.env` 内の `DATABASE_URL` / `DIRECT_URL` を確認・必要に応じて編集します。
+2. `.env` 内の `POSTGRES_PRISMA_URL` / `POSTGRES_URL_NON_POOLING` を確認・必要に応じて編集します。
 
    デフォルトでは、以下のようにローカルの Postgres を前提にしています。
 
    ```env
-   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ds-lms-demo?schema=public"
-   DIRECT_URL="postgresql://postgres:postgres@localhost:5432/ds-lms-demo?schema=public"
+   POSTGRES_PRISMA_URL="postgresql://postgres:postgres@localhost:5432/ds-lms-demo?schema=public"
+   POSTGRES_URL_NON_POOLING="postgresql://postgres:postgres@localhost:5432/ds-lms-demo?schema=public"
    ```
 
 ## 2. Docker で PostgreSQL を起動
@@ -104,4 +104,4 @@ bun run dev
   - 競合しているプロセスを停止するか、`docker-compose.yml` のポートを変更してください。
 - **`db:seed` 実行時に接続エラーになる**
   - `bun run db:up` でコンテナが起動しているか確認してください。
-  - `.env` の `DATABASE_URL` / `DIRECT_URL` が正しいか確認してください。
+  - `.env` の `POSTGRES_PRISMA_URL` / `POSTGRES_URL_NON_POOLING` が正しいか確認してください。

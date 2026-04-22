@@ -4,7 +4,7 @@ import { z } from "zod";
 export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "production", "test"]),
-    DATABASE_URL: z.string().url(),
+    POSTGRES_PRISMA_URL: z.string().url(),
     NEXTAUTH_URL: z.string().url(),
     NEXTAUTH_SECRET: z.string(),
     AZURE_AD_B2C_TENANT_NAME: z.string(),
@@ -12,7 +12,7 @@ export const env = createEnv({
     AZURE_AD_B2C_CLIENT_SECRET: z.string(),
     AZURE_AD_B2C_PRIMARY_USER_FLOW: z.string(),
     SUPABASE_URL: z.string().url(),
-    SUPABASE_KEY: z.string(),
+    SUPABASE_SERVICE_ROLE_KEY: z.string(),
     ARROW_EMAILS: z.string(),
     EDGE_CONFIG: z.string().optional(),
   },
@@ -22,7 +22,7 @@ export const env = createEnv({
   },
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-    DATABASE_URL: process.env.DATABASE_URL,
+    POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
@@ -31,7 +31,7 @@ export const env = createEnv({
     AZURE_AD_B2C_CLIENT_SECRET: process.env.AZURE_AD_B2C_CLIENT_SECRET,
     AZURE_AD_B2C_PRIMARY_USER_FLOW: process.env.AZURE_AD_B2C_PRIMARY_USER_FLOW,
     SUPABASE_URL: process.env.SUPABASE_URL,
-    SUPABASE_KEY: process.env.SUPABASE_KEY,
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
     NEXT_PUBLIC_UMAMI_WEBSITE_ID: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
     ARROW_EMAILS: process.env.ARROW_EMAILS,
     EDGE_CONFIG: process.env.EDGE_CONFIG,
