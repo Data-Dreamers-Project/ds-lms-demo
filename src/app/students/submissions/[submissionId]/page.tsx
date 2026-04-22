@@ -37,6 +37,14 @@ export default async function ({ params }: { params: Promise<{ submissionId: str
           {submission.status === "PENDING" ? "" : submission.score != null ? `${submission.score} 点` : ""}
         </span>
       </div>
+      {submission.description && (
+        <Card className="p-4">
+          <CardTitle className="text-lg font-bold mb-2">コードの説明</CardTitle>
+          <CardContent className="p-0">
+            <p className="text-sm whitespace-pre-wrap">{submission.description}</p>
+          </CardContent>
+        </Card>
+      )}
       <Card className="p-4 h-[300px] flex flex-col">
         <CardTitle className="text-lg font-bold">提出されたコード</CardTitle>
         <CardContent className="flex-1 overflow-hidden p-4">

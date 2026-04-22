@@ -238,6 +238,7 @@ model Submission {
   language    String    @default("python3")
   status      String // "PENDING", "EVALUATED"
   score       Float? // 得点
+  description String? // コードの処理説明
   createdAt   DateTime  @default(now())
   evaluatedAt DateTime? // 評価日時
   startedAt   DateTime? // 挑戦開始日時
