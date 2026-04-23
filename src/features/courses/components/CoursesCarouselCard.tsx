@@ -14,8 +14,8 @@ export default function CoursesCarouselCard({
   const progressValue = (achievementLevel / maxAchievementLevel) * 100;
 
   return (
-    <Card className="w-full max-w-[255px] shadow-md rounded-t-2xl mb-11">
-      <div className="relative w-full h-[184px]">
+    <Card className="w-full max-w-[255px] shadow-md rounded-t-2xl mb-11 pt-0">
+      <div className="relative w-full h-46">
         <Image src={"/courseLogo.webp"} alt={title} fill className="object-cover rounded-t-2xl" />
       </div>
 
@@ -28,7 +28,7 @@ export default function CoursesCarouselCard({
         {/* プログレスバー */}
         <div className="w-full flex items-center justify-between">
           <Progress value={progressValue} className="h-2 bg-gray-200 w-full" />
-          <p className="min-w-[50px] max-w-[70px] text-[9px] text-right text-gray-500 ml-2">
+          <p className="min-w-12.5 max-w-17.5 text-[9px] text-right text-gray-500 ml-2">
             {achievementLevel} / {maxAchievementLevel} 完了
           </p>
         </div>
