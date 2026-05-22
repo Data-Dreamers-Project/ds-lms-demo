@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { client } from "@/lib/hono";
+import { Plus } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -33,9 +34,17 @@ export default async function ManageCoursesPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-3xl font-bold">コース一覧</h1>
-        <Link href="/manage">
-          <Button variant="outline">管理トップに戻る</Button>
-        </Link>
+        <div className="flex gap-2">
+          <Link href="/manage/courses/new">
+            <Button>
+              <Plus />
+              新規作成
+            </Button>
+          </Link>
+          <Link href="/manage">
+            <Button variant="outline">管理トップに戻る</Button>
+          </Link>
+        </div>
       </div>
 
       <div className="rounded-md border">
