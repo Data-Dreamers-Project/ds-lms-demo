@@ -35,15 +35,15 @@ export default async function ManageCoursesPage() {
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-3xl font-bold">コース一覧</h1>
         <div className="flex gap-2">
-          <Link href="/manage/courses/new">
-            <Button>
+          <Button asChild>
+            <Link href="/manage/courses/new">
               <Plus />
               新規作成
-            </Button>
-          </Link>
-          <Link href="/manage">
-            <Button variant="outline">管理トップに戻る</Button>
-          </Link>
+            </Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href="/manage">管理トップに戻る</Link>
+          </Button>
         </div>
       </div>
 
