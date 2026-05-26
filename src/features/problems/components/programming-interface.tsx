@@ -202,9 +202,9 @@ export default function ProgrammingInterface({ problem, mode = "challenge" }: Pr
                       </Tabs>
                     </main>
                   </ResizablePanel>
+                  <ResizableHandle withHandle />
                   {/* 下部: コンソール領域 */}
                   <ResizablePanel defaultSize={30} minSize={5}>
-                    <ResizableHandle withHandle />
                     <ConsoleView
                       histories={executionHistories}
                       activeHistoryIndex={activeHistoryIndex}
