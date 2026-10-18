@@ -41,7 +41,7 @@ export default async function SignInPage({
             <h2 className="mt-6 text-2xl font-extrabold text-gray-900">Sign in to your account</h2>
           </div>
           <div className="flex flex-col space-y-4">
-            <SigninButton provider="azure-ad-b2c">
+            <SigninButton provider="azure-ad">
               <svg width="16" height="16" aria-hidden="true">
                 <rect x="0" y="0" width="6" height="6" fill="#F25022" />
                 <rect x="0" y="8" width="6" height="6" fill="#00A4EF" />

@@ -31,7 +31,7 @@ export default function CTA() {
             viewport={{ once: true }}
             className="space-x-4"
           >
-            <Button asChild size={"lg"} onClick={() => signIn("azure-ad-b2c", { callbackUrl: "/students" })}>
+            <Button asChild size={"lg"} onClick={() => signIn("azure-ad", { callbackUrl: "/students" })}>
               無料で始める
             </Button>
           </motion.div>

@@ -69,7 +69,7 @@ src/features/
 
 ### 認証
 
-**NextAuth v4** + **Azure AD B2C** で認証を管理。セッション情報は Prisma（PostgreSQL）で永続化。`src/lib/auth.ts` に設定。ロールは `SystemRole`（ADMIN / USER）で制御。
+**NextAuth v4** + **Entra ID** で認証を管理。セッション情報は Prisma（PostgreSQL）で永続化。`src/lib/auth.ts` に設定。ロールは `SystemRole`（ADMIN / USER）で制御。
 
 ### データベース
 
